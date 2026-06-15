@@ -1,119 +1,57 @@
-import { Footer } from '../components/Footer'
-import { Navbar } from '../components/Navbar'
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-export function AboutPage() {
-  return (
-    <main className="page-shell">
-      <Navbar />
+export default function About() {
+return ( <div className="min-h-screen flex flex-col bg-gray-50"> <Navbar />
 
-      <section className="page-content about-page">
-        <section className="about-hero">
-          <div className="about-hero__content">
-            <span className="section-block__kicker">About ProductDescriptionAi</span>
-            <h1>Built to help products sound clearer, stronger, and more convincing.</h1>
-            <p>
-              ProductDescriptionAi is a product description generator designed to turn
-              basic item details into clean, ready-to-use marketing copy. It helps
-              online sellers, interns, and small teams create better descriptions faster
-              without starting from a blank page every time.
-            </p>
+  <main className="flex-1 max-w-4xl mx-auto px-6 py-12 w-full">
+    <h1 className="text-4xl font-bold text-gray-800 mb-6">
+      About ProductDescriptionAI
+    </h1>
 
-            <div className="about-hero__highlights">
-              <div>
-                <strong>Faster writing</strong>
-                <span>Generate descriptions in less time.</span>
-              </div>
-              <div>
-                <strong>Better clarity</strong>
-                <span>Explain features and benefits clearly.</span>
-              </div>
-              <div>
-                <strong>Brand consistency</strong>
-                <span>Keep every product description aligned.</span>
-              </div>
-            </div>
-          </div>
+    <p className="text-gray-600 leading-relaxed mb-6">
+      ProductDescriptionAI is an intelligent content-generation platform
+      designed to help businesses, sellers, and marketers create
+      high-quality product descriptions effortlessly. By leveraging
+      advanced artificial intelligence, our platform transforms basic
+      product details into compelling, professional, and customer-focused
+      descriptions within seconds.
+    </p>
 
-          <aside className="about-profile" aria-label="Creator profile">
-            <span className="about-profile__label">About Me</span>
-            <h2>Yash Rawat</h2>
-            <p>
-              I am developing ProductDescriptionAi to help businesses automatically
-              create accurate, attractive, and SEO-optimized product descriptions.
-              The goal is to reduce manual effort and improve the efficiency of online
-              product listings.
-            </p>
+    <p className="text-gray-600 leading-relaxed mb-6">
+      Writing effective product descriptions is essential for attracting
+      customers and improving conversions. ProductDescriptionAI eliminates
+      the time and effort required to craft engaging content by generating
+      clear, persuasive, and SEO-friendly descriptions tailored to your
+      products.
+    </p>
 
-            <ul className="about-profile__list">
-              <li>
-                <strong>Phone Number:</strong> 1234567890
-              </li>
-              <li>
-                <strong>Github:</strong> <a href="https://github.com/yashrawt" target="_blank" rel="noopener noreferrer">Yash Rawat</a>
-              </li>
-              <li>
-                <strong>Email:</strong> yashrawat@example.com
-              </li>
-              <li>
-                <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/yash-rawt" target="_blank" rel="noopener noreferrer">Yash Rawat</a>
-              </li>
-            </ul>
-          </aside>
-        </section>
+    <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Key Features
+      </h2>
 
-        <section className="section-block about-story">
-          <div className="section-block__heading">
-            <span className="section-block__kicker">Product story</span>
-            <h2>Why this app matters</h2>
-            <p>
-              Many product fail because the description is too short, too generic, or too
-              hard to read. This app is meant to solve that problem by helping users
-              produce stronger descriptions with a simple, guided flow.
-            </p>
-          </div>
+      <ul className="space-y-3 text-gray-600">
+        <li> AI-powered product description generation</li>
+        <li> Instant and easy-to-use interface</li>
+        <li> Professional and marketing-focused content</li>
+        <li> SEO-friendly descriptions for better visibility</li>
+        <li> Tailored content for various product categories</li>
+        <li> Helps improve customer engagement and conversions</li>
+      </ul>
+    </div>
 
-          <div className="about-story__grid">
-            <article className="about-card">
-              <h3>For small stores</h3>
-              <p>
-                It gives small businesses a quick way to make products look more
-                professional without needing a dedicated copywriter.
-              </p>
-            </article>
-            <article className="about-card">
-              <h3>For busy teams</h3>
-              <p>
-                It helps teams move faster when there are many items to describe and
-                limited time to write each page from scratch.
-              </p>
-            </article>
-            <article className="about-card">
-              <h3>Tone</h3>
-              <p>
-                It supports multiple tones so product descriptions stay aligned with the
-                brand voice and feel more consistent.
-              </p>
-            </article>
-          </div>
-        </section>
+    <p className="text-gray-600 leading-relaxed">
+      Our mission is to empower businesses of all sizes with AI-driven
+      content creation tools that save time, enhance productivity, and
+      improve online product presentation. Whether you're managing an
+      e-commerce store, launching a new product, or scaling your business,
+      ProductDescriptionAI helps you create descriptions that sell.
+    </p>
+  </main>
 
-        <section className="section-block about-purpose">
-          <div className="section-block__heading">
-            <span className="section-block__kicker">Mission</span>
-            <h2>Make product descriptions easier to create and easier to read.</h2>
-          </div>
+  <Footer />
+</div>
 
-          <div className="about-purpose__box">
-            <p>
-              The mission behind ProductDescriptionAi is simple: help people explain
-              products more effectively. The app focuses on turning details into useful
-              copy so products can be presented with more confidence and less effort.
-            </p>
-          </div>
-        </section>
-      </section>
-
-      <Footer />
-    </main>
-  )
+);
 }
