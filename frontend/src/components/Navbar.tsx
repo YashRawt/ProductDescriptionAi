@@ -1,36 +1,40 @@
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const navItems = [
   { to: '/', label: 'Home' },
+  { to: '/demo', label: 'Demo' },
   { to: '/about', label: 'About' },
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/login', label: 'Login' },
 ]
 
-export function Navbar() {
+function Navbar() {
   return (
-    <header className="navbar">
-      <div className="navbar__brand">
-        <Link to="/" className="navbar__logo">
-          ProductDescriptionAi
-        </Link>
-        <p className="navbar__tagline">Generate product descriptions in seconds</p>
-      </div>
+    <header className="site-header">
+      <div className="nav-shell">
+        <NavLink to="/" className="brand" aria-label="Product Description Ai home">
+          <span className="brand-mark">P</span>
+          <span>
+            <span className="brand-name">Product Description Ai</span>
+            <span className="brand-tag">Fast product copy for modern stores</span>
+          </span>
+        </NavLink>
 
-      <nav className="navbar__links" aria-label="Primary navigation">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.to === '/'}
-            className={({ isActive }) =>
-              `navbar__link${isActive ? ' navbar__link--active' : ''}`
-            }
-          >
-            {item.label}
-          </NavLink>
-        ))}
-      </nav>
+        <nav className="nav-links" aria-label="Main navigation">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              end={item.to === '/'}
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+      </div>
     </header>
   )
 }
+
+export default Navbar
