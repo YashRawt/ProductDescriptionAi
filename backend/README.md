@@ -237,3 +237,6 @@ Run the backend
 ```bash
 uvicorn main:app --reload
 ```
+## Database Schema
+
+![Database Schema](Utils/Schema%20Design.png)
