@@ -211,3 +211,29 @@ uvicorn main:app --reload --port 8001
 * The backend uses Google's Gemini API to generate AI-powered product descriptions.
 * All generated descriptions can be created, updated, deleted, searched, and regenerated through the REST API.
 
+## Database Setup
+
+1. Create a free MongoDB Atlas cluster.
+2. Create a database user.
+3. Whitelist your IP.
+4. Copy the connection string.
+5. Create a `.env` file.
+
+Example:
+
+```env
+MONGO_URI=your_connection_string
+DATABASE_NAME=product_description_db
+```
+
+Install dependencies
+
+```bash
+pip install motor python-dotenv
+```
+
+Run the backend
+
+```bash
+uvicorn main:app --reload
+```
