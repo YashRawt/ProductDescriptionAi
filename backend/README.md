@@ -240,3 +240,9 @@ uvicorn main:app --reload
 ## Database Schema
 
 ![Database Schema](Utils/Schema%20Design.png)
+
+## Why MongoDB?
+
+For a detailed explanation, see:
+
+- [Why MongoDB](Utils/Why%20MongoDb.txt)
