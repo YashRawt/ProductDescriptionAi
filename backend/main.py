@@ -1,11 +1,15 @@
 import os
 import logging
+from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+
+# Import database lifecycle operations
+from database import init_db, close_db
 
 # Load environment variables
 load_dotenv()
@@ -14,10 +18,25 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("backend")
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    logger.info("Starting up: initializing MongoDB connection...")
+    try:
+        await init_db()
+    except Exception as e:
+        logger.critical(f"Database initialization failed: {e}. Exiting.")
+        raise e
+    yield
+    # Shutdown
+    logger.info("Shutting down: closing MongoDB connection...")
+    await close_db()
+
 app = FastAPI(
     title="Product Description AI API",
     description="Backend API for generating and managing AI product descriptions",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan
 )
 
 # Enable CORS
