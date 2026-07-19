@@ -1,13 +1,21 @@
 import os
 import logging
+from pathlib import Path
+
+from dotenv import load_dotenv
 import httpx
 
 # Setup logging
 logger = logging.getLogger("backend.ai")
 
+# Load backend-local environment variables so the Gemini key is available when
+# this module is imported outside of main.py as well.
+load_dotenv(dotenv_path=Path(__file__).with_name(".env"))
+
 async def generate_ai_description(name: str, keypoints: str, tone: str, style: str) -> str:
     """Generate product description using Gemini API or fallback template generator."""
     api_key = os.getenv("GEMINI_API_KEY")
+    model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
     
     # Prompt construction
     prompt = (
@@ -24,7 +32,10 @@ async def generate_ai_description(name: str, keypoints: str, tone: str, style: s
         return fallback_generate(name, keypoints, tone, style)
 
     # Use actual Gemini API
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
+    url = (
+        "https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{model_name}:generateContent?key={api_key}"
+    )
     payload = {
         "contents": [
             {
@@ -38,13 +49,20 @@ async def generate_ai_description(name: str, keypoints: str, tone: str, style: s
     try:
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.post(url, json=payload)
-            if response.status_code == 200:
-                data = response.json()
-                description_text = data["candidates"][0]["content"]["parts"][0]["text"].strip()
-                return description_text
-            else:
-                logger.error(f"Gemini API returned status {response.status_code}: {response.text}")
-                return fallback_generate(name, keypoints, tone, style)
+            response.raise_for_status()
+
+            data = response.json()
+            candidates = data.get("candidates") or []
+            if candidates:
+                content = candidates[0].get("content") or {}
+                parts = content.get("parts") or []
+                if parts:
+                    text = parts[0].get("text", "").strip()
+                    if text:
+                        return text
+
+            logger.error(f"Gemini API returned an unexpected response shape: {data}")
+            return fallback_generate(name, keypoints, tone, style)
     except Exception as e:
         logger.error(f"Error calling Gemini API: {e}")
         return fallback_generate(name, keypoints, tone, style)
