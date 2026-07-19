@@ -1,22 +1,36 @@
 import os
 import logging
 from contextlib import asynccontextmanager
+from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 
 # Import database lifecycle operations
 from database import init_db, close_db
+from rate_limit import limiter
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from the backend folder so the API key is found
+# regardless of the current working directory.
+load_dotenv(dotenv_path=Path(__file__).with_name(".env"))
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("backend")
+
+
+def _allowed_origins() -> list[str]:
+    origins = {"http://localhost:5173"}
+    frontend_origin = os.getenv("FRONTEND_ORIGIN")
+    if frontend_origin:
+        origins.add(frontend_origin.rstrip("/"))
+    return sorted(origins)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -25,8 +39,7 @@ async def lifespan(app: FastAPI):
     try:
         await init_db()
     except Exception as e:
-        logger.critical(f"Database initialization failed: {e}. Exiting.")
-        raise e
+        logger.critical(f"Database initialization failed: {e}. Continuing without an active database connection.")
     yield
     # Shutdown
     logger.info("Shutting down: closing MongoDB connection...")
@@ -39,17 +52,23 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_middleware(SlowAPIMiddleware)
+
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development ease; configure specifically in production
+    allow_origins=_allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Include Routers
+from routers.auth import router as auth_router
 from routers.descriptions import router as descriptions_router
+app.include_router(auth_router)
 app.include_router(descriptions_router)
 
 # --- Global Exception Handlers ---
