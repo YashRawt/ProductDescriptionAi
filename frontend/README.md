@@ -29,23 +29,37 @@ A modern and responsive **React + TypeScript** frontend starter template built w
 ## 📁 Project Structure
 
 ```text
-src/
+frontend/
 ├── components/
 │   ├── Navbar.tsx
 │   ├── Hero.tsx
 │   ├── Card.tsx
 │   └── Footer.tsx
-│
 ├── pages/
 │   ├── Home.tsx
 │   ├── About.tsx
 │   ├── Dashboard.tsx
 │   ├── Login.tsx
 │   └── Support.tsx
-│
-├── App.tsx
-├── main.tsx
-└── index.css
+├── public/
+├── src/
+│   ├──content 
+│   ├── assets
+│   ├── backup(component/pages folders with imp files)
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── node_modules/
+├── dist/
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
+
 ```
 
 ---
