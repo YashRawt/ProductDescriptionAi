@@ -39,10 +39,10 @@ Setup instructions will be added soon.
 ## 🌐 Deployment Information
 
 ### Live Frontend URL
-**Frontend:** https://your-frontend.vercel.app
+**Frontend:** https://product-description-ai-deployment.vercel.app/
 
 ### Live Backend URL
-**Backend:** https://your-backend.onrender.com
+**Backend:** https://productdescriptionaideployment.onrender.com
 
 ---
 
