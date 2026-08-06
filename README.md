@@ -45,13 +45,13 @@ The application leverages AI to create professional, human-like, and SEO-optimiz
 
 ## Generate Description
 
-![Generate](docs/screenshots/generator.png)
+![Generate](docs/screenshots/Gen.png)
 
 ---
 
 ## Generated Result
 
-![Result](docs/screenshots/result.png)
+![Result](docs/screenshots/after.png)
 
 ---
 
