@@ -440,5 +440,6 @@ Feel free to fork, modify, and use this project for educational or personal purp
 <div align="center">
 
 ⭐ If you found this project useful, consider giving it a star on GitHub!
+Thanks
 
 </div>
